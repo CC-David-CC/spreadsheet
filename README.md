@@ -12,8 +12,7 @@ the current workbook and its unsaved edits available. Saves capture the current 
 Run `npm ci --prefix apps/system/spreadsheet --ignore-scripts` before building.
 SheetJS is pinned from its official distribution, not the outdated npm registry.
 
-Basic arithmetic, cell references and SUM, AVERAGE, MIN, MAX and COUNT are
-calculated with an app-local bounded parser. In SUM, AVERAGE, MIN, MAX and COUNT, referenced blank cells and nonnumeric text labels are ignored; decimal numeric text is counted as numeric because the grid stores many entries as text. AVERAGE with no numeric values reports an error; MIN and MAX return zero. This correction may change results produced by older versions for ranges containing blank cells. Other formulas remain in the file
+Basic arithmetic, cell references, PI(), ABS, SQRT, SIN, COS, TAN, SUM, AVERAGE, MIN, MAX and COUNT are calculated with an app-local bounded parser. Trigonometric functions take radians; for degrees use, for example, `=SIN(30*PI()/180)`. Calculations use floating-point numbers and may have rounding error. Invalid domains such as `=SQRT(-1)` report `#ERROR!`. The collapsed Formula help panel lists supported functions and examples. In SUM, AVERAGE, MIN, MAX and COUNT, referenced blank cells and nonnumeric text labels are ignored; decimal numeric text is counted as numeric because the grid stores many entries as text. AVERAGE with no numeric values reports an error; MIN and MAX return zero. This correction may change results produced by older versions for ranges containing blank cells. Other formulas remain in the file
 but show `#ERROR!`; the vendor's dynamic JavaScript formula evaluator is
 intentionally disabled. Division by zero, non-real results and arithmetic overflow at any intermediate step report `#ERROR!` and block CSV result export. This is a basic spreadsheet, not full Excel parity.
 
