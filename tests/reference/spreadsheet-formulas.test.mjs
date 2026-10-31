@@ -14,3 +14,7 @@ assert.equal(calculate(mixed,4,0).value,15);assert.equal(calculate(mixed,5,0).va
 assert.equal(calculate([['label'],[''],['=AVERAGE(A1:A2)']],2,0).error,'#ERROR!');assert.equal(calculate([['label'],[''],['=MIN(A1:A2)']],2,0).value,0);assert.equal(calculate([['text'],['=A1+1']],1,0).error,'#ERROR!');assert.equal(calculate([['=SUM(A1:A1)']],0,0).error,'#ERROR!');
 console.log('PASS aggregate functions ignore empty cells and text labels');
 assert.equal(calculate([['=SUM(A99999)']],0,0).error,'#ERROR!');
+
+for(const formula of ['=1/(1/0)','=1e999^0','=(-1)^0.5^0.5','=SUM(1e308,1e308,-1e308)'])assert.equal(calculate([[formula]],0,0).error,'#ERROR!',formula+' propagates intermediate errors');
+assert.equal(calculate([['=1/(2/4)']],0,0).value,2);
+console.log('PASS nonfinite intermediate values propagate as errors');
