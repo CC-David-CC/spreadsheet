@@ -18,3 +18,8 @@ assert.equal(calculate([['=SUM(A99999)']],0,0).error,'#ERROR!');
 for(const formula of ['=1/(1/0)','=1e999^0','=(-1)^0.5^0.5','=SUM(1e308,1e308,-1e308)'])assert.equal(calculate([[formula]],0,0).error,'#ERROR!',formula+' propagates intermediate errors');
 assert.equal(calculate([['=1/(2/4)']],0,0).value,2);
 console.log('PASS nonfinite intermediate values propagate as errors');
+
+for(const [formula,expected] of [['=PI()',Math.PI],['=SQRT(9)',3],['=ABS(-5)',5],['=SIN(PI()/2)',1],['=COS(PI())',-1],['=TAN(0)',0],['=SQRT(ABS(-9))',3],['=SIN(30*PI()/180)',0.5]])assert.ok(Math.abs(calculate([[formula]],0,0).value-expected)<1e-12,formula);
+for(const formula of ['=PI(1)','=SQRT()','=SQRT(1,2)','=SQRT(-1)','=SIN(1/0)','=ABS(1e999)','=SIN(A1)','=SIN(A1:A2)'])assert.equal(calculate([[formula]],0,0).error,'#ERROR!',formula);
+assert.equal(calculate([['9','=SQRT(A1)']],0,1).value,3);
+console.log('PASS bounded scientific functions and domain errors');
