@@ -7,8 +7,7 @@ an imported copy; formatting, charts and advanced features are not preserved. **
 Export creates a separate XLSX in Files and never downloads to the PC. The destination and workbook values are captured when export starts; later edits are not included, and the status reports that distinction. Existing XLSX files require confirmation and a version check. **Export current sheet CSV** writes the selected worksheet’s calculated values to a separate UTF-8 CSV in My files. CSV does not preserve formulas, formatting or other sheets; unsupported or invalid formulas stop the export. Trailing empty rows and columns are omitted, formula-like text is prefixed with an apostrophe for spreadsheet safety, and output is limited to 8 MiB. Existing CSV files require replacement confirmation.
 Choose **Open from My files** to open a workbook, and **Choose save folder**
 to select where a native workbook is saved. A file that cannot be opened leaves
-the current workbook and its unsaved edits available. Saves are written to the
-browser first and synchronized with the server.
+the current workbook and its unsaved edits available. Saves capture the current filename and workbook when started, write to the browser first and synchronize with the server. If edits occur during the save, the newer edits remain unsaved. Saving over a different existing workbook asks for confirmation; changed or conflicting files are protected.
 
 Run `npm ci --prefix apps/system/spreadsheet --ignore-scripts` before building.
 SheetJS is pinned from its official distribution, not the outdated npm registry.
