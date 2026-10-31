@@ -20,3 +20,5 @@ intentionally disabled. Division by zero, non-real results and arithmetic overfl
 Local desktop and emulated-phone account tests and live desktop and emulated-phone tests cover CSV open, edit, save as a separate workbook, invalid CSV recovery, sync and fresh-session reopening. One live phone-sized run timed out waiting for sync; a later fresh run passed. Physical touch and larger or non-UTF-8 CSV files remain unverified.
 
 Local desktop and emulated-phone and live emulated-phone account tests also cover CSV export, cancelled replacement, selected-sheet values, invalid formulas and opening the result in Data Explorer.
+
+If the local workbook conflicts with the server while saving, the status directs you to resolve the copies in Files. Further edits remain marked unsaved; a local conflicting copy is not described as syncing.
