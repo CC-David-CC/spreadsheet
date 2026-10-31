@@ -14,7 +14,7 @@ Run `npm ci --prefix apps/system/spreadsheet --ignore-scripts` before building.
 SheetJS is pinned from its official distribution, not the outdated npm registry.
 
 Basic arithmetic, cell references and SUM, AVERAGE, MIN, MAX and COUNT are
-calculated with an app-local bounded parser. Other formulas remain in the file
+calculated with an app-local bounded parser. In SUM, AVERAGE, MIN, MAX and COUNT, referenced blank cells and nonnumeric text labels are ignored; decimal numeric text is counted as numeric because the grid stores many entries as text. AVERAGE with no numeric values reports an error; MIN and MAX return zero. This correction may change results produced by older versions for ranges containing blank cells. Other formulas remain in the file
 but show `#ERROR!`; the vendor's dynamic JavaScript formula evaluator is
 intentionally disabled. This is a basic spreadsheet, not full Excel parity.
 
