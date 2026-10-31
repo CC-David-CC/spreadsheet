@@ -16,7 +16,7 @@ SheetJS is pinned from its official distribution, not the outdated npm registry.
 Basic arithmetic, cell references and SUM, AVERAGE, MIN, MAX and COUNT are
 calculated with an app-local bounded parser. In SUM, AVERAGE, MIN, MAX and COUNT, referenced blank cells and nonnumeric text labels are ignored; decimal numeric text is counted as numeric because the grid stores many entries as text. AVERAGE with no numeric values reports an error; MIN and MAX return zero. This correction may change results produced by older versions for ranges containing blank cells. Other formulas remain in the file
 but show `#ERROR!`; the vendor's dynamic JavaScript formula evaluator is
-intentionally disabled. This is a basic spreadsheet, not full Excel parity.
+intentionally disabled. Division by zero, non-real results and arithmetic overflow at any intermediate step report `#ERROR!` and block CSV result export. This is a basic spreadsheet, not full Excel parity.
 
 Local desktop and emulated-phone account tests and live desktop and emulated-phone tests cover CSV open, edit, save as a separate workbook, invalid CSV recovery, sync and fresh-session reopening. One live phone-sized run timed out waiting for sync; a later fresh run passed. Physical touch and larger or non-UTF-8 CSV files remain unverified.
 
