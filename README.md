@@ -28,3 +28,10 @@ workbook was edited after export began, it also reports that the newer edits are
 not in that export. Local desktop, emulated-phone and 4K and live emulated-phone
 account tests use competing server writes to check both formats, retained copies
 and fresh-session workbook recovery.
+
+A separate notice stays visible if the saved workbook changes, conflicts or
+cannot be checked; the current grid remains open. Save a copy or reopen after
+resolving the issue. The app rechecks the workbook when an export or open
+finishes, including changes detected while the operation was running. Local
+desktop, emulated-phone and 4K and live emulated-phone tests cover a server
+change during CSV export, retained export status, saving a copy and reopening.
