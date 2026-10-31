@@ -7,3 +7,6 @@ assert.deepEqual(parse('').sheets[0].data,[['']]);assert.deepEqual(parse('a,\n')
 assert.throws(()=>parse('a,"unterminated'),/unclosed/);assert.throws(()=>parse('"a"b'),/closing quote/);assert.throws(()=>parse('a"b'),/unexpected quote/);
 assert.throws(()=>parse('x,'.repeat(256)+'x'),/256 columns/);assert.throws(()=>parse('x\n'.repeat(1001)),/10,000-cell grid/);
 assert.throws(()=>parseCSV(Uint8Array.from([0xff])),/encoded data|encoding/i);console.log('PASS CSV quoting, text preservation, formula escaping and bounds');
+import {sheetToCSV} from '../apps/system/spreadsheet/csv-export.mjs';
+assert.equal(sheetToCSV([['Name','Value','Twice'],['a,"b"','-5','=B2*2'],['unsafe','@cmd',''],['','','']]),'"Name","Value","Twice"\r\n"a,""b""","-5","-10"\r\n"unsafe","\'@cmd",""\r\n');
+assert.equal(sheetToCSV([['']]),'');assert.throws(()=>sheetToCSV([['=UNSUPPORTED(1)']]),/unsupported or invalid formula/);assert.ok(sheetToCSV([['  =1+1']]).startsWith('"\'  =1+1"'));console.log('PASS CSV value export, formula validation, quoting, trimming and text protection');
