@@ -21,3 +21,10 @@ Local desktop and emulated-phone account tests and live desktop and emulated-pho
 Local desktop and emulated-phone and live emulated-phone account tests also cover CSV export, cancelled replacement, selected-sheet values, invalid formulas and opening the result in Data Explorer.
 
 If the local workbook conflicts with the server while saving, the status directs you to resolve the copies in Files. Further edits remain marked unsaved; a local conflicting copy is not described as syncing.
+
+If a conflict reaches the browser while a CSV or XLSX export is being written,
+the export reports that the local copy needs resolution in Files. If the
+workbook was edited after export began, it also reports that the newer edits are
+not in that export. Local desktop, emulated-phone and 4K and live emulated-phone
+account tests use competing server writes to check both formats, retained copies
+and fresh-session workbook recovery.
