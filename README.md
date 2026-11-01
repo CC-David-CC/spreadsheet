@@ -125,3 +125,11 @@ This rounds the display only: calculations and CSV exports use full precision,
 and saved workbooks retain the original formula text. XLSX export follows its
 existing workbook conversion rules. As with any floating-point calculation,
 validate engineering-critical results independently.
+
+In aggregate functions, text that has numeric syntax but overflows the browser's
+floating-point range (for example `1e309`) is an error rather than a label to
+ignore. The formula displays `#ERROR!` and CSV export stops, so an overflowing
+measurement cannot silently disappear from an average or total. Ordinary
+nonnumeric labels remain ignored. Local registered-account desktop and
+emulated-phone tests covered a failed CSV export retaining the old file,
+correcting the measurement, server sync and fresh-session reopening.
