@@ -5,6 +5,18 @@ app-owned worker. Files and account storage are provided by the host. Native
 `.codisheet` files keep sheet names, cell values and formula text. XLSX opens as
 an imported copy; formatting, charts and advanced features are not preserved. **Open from My files** also imports UTF-8 comma-separated CSV as a new workbook, leaving the original CSV unchanged. CSV fields remain text, including leading zeros. Fields beginning with `=` are prefixed with an apostrophe so they do not silently become formulas; remove the apostrophe deliberately if a formula is intended. CSV import is limited to 8 MiB and a 10,000-cell grid (including the minimum grid size); semicolon-separated files are not supported. Files opens CSV in Data Explorer by default; use Spreadsheet’s Open button to import one here.
 Export creates a separate XLSX in Files and never downloads to the PC. The destination and workbook values are captured when export starts; later edits are not included, and the status reports that distinction. Existing XLSX files require confirmation and a version check. **Export current sheet CSV** writes the selected worksheet’s calculated values to a separate UTF-8 CSV in My files. CSV does not preserve formulas, formatting or other sheets; unsupported or invalid formulas stop the export. Trailing empty rows and columns are omitted, formula-like text is prefixed with an apostrophe for spreadsheet safety, and output is limited to 8 MiB. Existing CSV files require replacement confirmation.
+
+Under **CSV text safety**, protection is on by default for each window. It
+prefixes potentially formula-like text with an apostrophe; export reports how
+many cells were changed. Turn it off to preserve the current cell text, with
+the risk that another spreadsheet app may interpret that text as a formula.
+Export reports how many cells were left unprotected. In both modes formula
+cells export their calculated values, not formula text; CSV import's earlier
+escaping of leading `=` is not undone. The choice does not alter the workbook
+and returns to protected mode in a new window. Local registered-account
+desktop and emulated-phone tests cover CSV import, calculation, both export
+options, server bytes and fresh-session workbook reopening. Physical touch and
+how every third-party spreadsheet interprets CSV remain unverified.
 Choose **Open from My files** to open a workbook, and **Choose save folder**
 to select where a native workbook is saved. A file that cannot be opened leaves
 the current workbook and its unsaved edits available. If a cell is still being edited while a file opens, the editor commits that cell before checking for changes and asks before replacing it. Saves capture the current filename and workbook when started, write to the browser first and synchronize with the server. If edits occur during the save, the newer edits remain unsaved. Saving over a different existing workbook asks in a desktop-styled confirmation dialog; the target version is checked again after the answer so a file changed while the dialog was open is preserved. Opening over unsaved edits uses the same themed dialog. Cancel keeps the current workbook and its edits open.

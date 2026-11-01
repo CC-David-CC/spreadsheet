@@ -1,9 +1,9 @@
 import * as XLSX from 'xlsx';
 import {parseCSV} from './csv.mjs';
-import {sheetToCSV} from '../csv-export.mjs';
+import {sheetToCSVWithReport} from '../csv-export.mjs';
 const MAX_CELLS=10000,MAX_SHEETS=32;
-self.onmessage=event=>{const {id,operation,bytes,sheets,data}=event.data;try{
- if(operation==='export-csv'){self.postMessage({id,result:sheetToCSV(data)});
+self.onmessage=event=>{const {id,operation,bytes,sheets,data,protect}=event.data;try{
+ if(operation==='export-csv'){self.postMessage({id,result:sheetToCSVWithReport(data,{protect:protect!==false})});
  }else if(operation==='import-csv'){self.postMessage({id,result:parseCSV(bytes)});
  }else if(operation==='import'){
   const workbook=XLSX.read(bytes,{type:'array',cellFormula:true,cellStyles:false,cellDates:false});if(workbook.SheetNames.length>MAX_SHEETS)throw Error('Workbook has too many sheets.');let cells=0;
