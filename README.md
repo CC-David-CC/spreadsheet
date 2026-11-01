@@ -164,10 +164,13 @@ corrected the measurement through the grid API, saved and synchronized the
 workbook, and reopened the result in a fresh browser session. Physical touch
 editing is not verified by that test.
 
-As a temporary safeguard, moving, sorting or deleting rows or columns is
-blocked while any sheet contains a formula. Undo/redo is also blocked when its
-next action would change the sheet structure; ordinary cell undo/redo remains
-available. Row and column insertion remain available. This protects against an
+As a temporary safeguard, moving and sorting rows or columns is blocked while
+any sheet contains a formula. Deleting rows is permitted only below every
+formula cell and understood reference in the workbook; deleting columns is
+permitted only to their right. Unknown or ambiguous formula syntax keeps
+deletion blocked. Undo/redo is blocked when its next action would change the
+sheet structure; ordinary cell undo/redo remains available. Row and column
+insertion remain available. This protects against an
 observed range-reference error: moving rows 1 and 2 changed `SUM(A1:A3)` to
 `SUM(A2:A3)`, dropping a value. Some permutations can produce disjoint reference
 ranges that the current formula language cannot express, so this is a guard,
@@ -179,3 +182,8 @@ including a formula still being typed, ordinary cell undo, row insertion, server
 sync and fresh-session reopening. A separate formula-free reorder/sort test
 passed. Tests exercise the grid's operations API; physical drag gestures and all
 formula reference cases are not verified.
+
+Local registered-account desktop and emulated-phone tests also removed an
+unrelated trailing row and column from a two-sheet workbook, preserved formula
+text and results, blocked deletion through a referenced area, synced and reopened.
+This is a conservative subset, not a general formula-reference rewrite.
