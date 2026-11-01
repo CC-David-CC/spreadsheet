@@ -215,3 +215,22 @@ may show a different, more accurate result than older versions. An isolated
 registered-account desktop and emulated-phone test checked the displayed and
 exported sum and average, an edit, server sync, closing and fresh-session
 reopening. It used the grid API to edit rather than physical touch input.
+
+Delimited import now processes contiguous text spans instead of building a
+string one character at a time, and quote-heavy import/export uses bounded
+UTF-16 buffers rather than a long chain of temporary strings. CSV export checks
+its UTF-8 byte budget while assembling rows, before constructing the complete
+output. The 8 MiB CSV/TSV limit and 10,000-cell grid limit remain: the requested
+128 MiB application limit is **not** yet supported by Spreadsheet. In one local
+Node measurement, importing a 6 MiB plain field used about 62 MiB RSS with the
+new parser versus 331 MiB before; individual device and browser usage varies.
+A local browser test of a 4.2 MiB quoted emoji-heavy cell did not finish loading
+within 60 seconds, despite the same parser handling it quickly in Node. The
+exact browser bottleneck is unproven. Supporting the larger limit safely needs
+bounded worker/storage transfers and a grid that can abbreviate or virtualize
+long cell presentation while keeping the complete value for editing, copying,
+formulas and export; it also needs memory and responsiveness tests on real
+phones. Local registered-account desktop and emulated-phone tests cover a
+140 KB quote-heavy Unicode CSV, edits, exact export, over-limit rejection,
+server sync and fresh-session reopen. They do not establish 128 MiB support or
+physical-device performance.
