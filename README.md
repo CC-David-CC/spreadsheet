@@ -224,9 +224,11 @@ output. The 8 MiB CSV/TSV limit and 10,000-cell grid limit remain: the requested
 128 MiB application limit is **not** yet supported by Spreadsheet. In one local
 Node measurement, importing a 6 MiB plain field used about 62 MiB RSS with the
 new parser versus 331 MiB before; individual device and browser usage varies.
-A local browser test of a 4.2 MiB quoted emoji-heavy cell did not finish loading
-within 60 seconds, despite the same parser handling it quickly in Node. The
-exact browser bottleneck is unproven. Supporting the larger limit safely needs
+Before long-cell previews were added, a local browser test of a 4.2 MiB
+quoted emoji-heavy cell did not finish loading within 60 seconds. Instrumentation
+showed file read, worker parsing and grid construction completed; the page then
+stalled during browser rendering. The preview below resolved that fixture, but
+supporting the larger limit safely needs
 bounded worker/storage transfers and a grid that can abbreviate or virtualize
 long cell presentation while keeping the complete value for editing, copying,
 formulas and export; it also needs memory and responsiveness tests on real
@@ -234,3 +236,24 @@ phones. Local registered-account desktop and emulated-phone tests cover a
 140 KB quote-heavy Unicode CSV, edits, exact export, over-limit rejection,
 server sync and fresh-session reopen. They do not establish 128 MiB support or
 physical-device performance.
+
+To keep a large cell from blocking rendering, values longer than 4,096 UTF-16
+code units are displayed as a labeled, read-only 256-character preview. The
+complete value stays in the workbook; formulas and CSV export use the full
+value. Copy, cut, paste and clear are blocked for selections containing such a
+cell, including mixed selections, to avoid copying a partial value or changing
+only part of a selection. The app explains this in a visible notice and the
+cell's accessible label. To access the full value, export the sheet to CSV and
+open the CSV in Text; if CSV export is unavailable, the saved `.codisheet` is
+also readable in Text as JSON. Editing that JSON directly is an advanced
+workaround, not a dedicated large-cell editor. Row and column deletion remain
+intentional structural operations and can delete a long value.
+
+Isolated registered-account desktop and phone-sized tests used a 4.2 MiB
+quote-heavy Unicode field that previously timed out loading. They checked the
+preview, notice, protected grid interactions, a formula referencing the value,
+ordinary-cell control, row/column delete and undo, exact CSV export, server
+sync and fresh-session reopen. A desktop test also opened the exported CSV in
+Text. Physical touch, actual operating-system clipboard integration, all grid
+shortcuts and a 128 MiB workbook are not covered; the 8 MiB CSV/TSV limit
+remains in force.
