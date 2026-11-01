@@ -29,6 +29,11 @@ Basic arithmetic, cell references, PI(), ABS, SQRT, SIN, COS, TAN, SUM, AVERAGE,
 but show `#ERROR!`; the vendor's dynamic JavaScript formula evaluator is
 intentionally disabled. Division by zero, non-real results and arithmetic overflow at any intermediate step report `#ERROR!` and block CSV result export. This is a basic spreadsheet, not full Excel parity.
 
+Powers use conventional mathematical precedence: `=-2^2` is `-4`,
+`=(-2)^2` is `4`, and `=2^-2` is `0.25`. Powers associate right to left.
+This changes results for some formulas saved by earlier versions and differs
+from Excel's treatment of a leading minus; use parentheses when sharing files.
+
 TAN also reports `#ERROR!` at exactly represented odd multiples of `PI()/2`,
 where tangent is undefined; nearby valid angles remain supported but can be
 very sensitive to floating-point rounding. CSV export rejects such errors.
