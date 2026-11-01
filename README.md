@@ -205,3 +205,13 @@ escaped leading equals, calculated a formula, saved a separate workbook, exporte
 CSV, and synced and reopened. An invalid TSV left the saved workbook open. The
 original TSV stayed unchanged. Physical touch and other TSV dialects remain
 unverified.
+
+SUM and AVERAGE use compensated floating-point summation to better preserve
+small measurements when large positive and negative values cancel. For
+example, summing `10000000000000000`, `1`, and `-10000000000000000` returns
+`1`. Floating-point rounding remains possible, and an overflowing intermediate
+still reports `#ERROR!`; this is not arbitrary-precision arithmetic. Workbooks
+may show a different, more accurate result than older versions. An isolated
+registered-account desktop and emulated-phone test checked the displayed and
+exported sum and average, an edit, server sync, closing and fresh-session
+reopening. It used the grid API to edit rather than physical touch input.
