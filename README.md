@@ -56,3 +56,6 @@ change during CSV export, retained export status, saving a copy and reopening.
 Saving or exporting commits the active cell first, so the snapshot includes
 what the user is typing. Desktop and emulated-phone tests cover saving and
 CSV/XLSX export; physical touch remains unverified.
+
+If a workbook opened directly from Files cannot be read, the app reports the
+error and opens a new blank workbook. The original file remains unchanged.
