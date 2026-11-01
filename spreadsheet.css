@@ -1,2 +1,3 @@
 .spreadsheet-content{display:flex;flex-direction:column;overflow:hidden;background:#fff}.spreadsheet-bar{display:flex;gap:6px;flex-wrap:wrap;padding:6px}.spreadsheet-bar input{flex:1;min-width:150px;padding:6px}.spreadsheet-bar button{min-height:44px;padding:5px 10px}.spreadsheet-grid{flex:1;min-height:0;overflow:auto}.spreadsheet-content .app-status{padding:6px}
 .spreadsheet-file-warning:not([hidden]){margin:4px 6px;padding:6px 8px;border-left:4px solid #a65300;background:#fff1d6;color:#4d2900;line-height:1.35}
+.spreadsheet-structure-warning:not([hidden]){margin:4px 6px;padding:6px 8px;border-left:4px solid #a65300;background:#fff1d6;color:#4d2900;line-height:1.35}

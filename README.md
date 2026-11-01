@@ -163,3 +163,19 @@ a measurement workbook, confirmed an invalid reference blocked CSV export,
 corrected the measurement through the grid API, saved and synchronized the
 workbook, and reopened the result in a fresh browser session. Physical touch
 editing is not verified by that test.
+
+As a temporary safeguard, moving, sorting or deleting rows or columns is
+blocked while any sheet contains a formula. Undo/redo is also blocked when its
+next action would change the sheet structure; ordinary cell undo/redo remains
+available. Row and column insertion remain available. This protects against an
+observed range-reference error: moving rows 1 and 2 changed `SUM(A1:A3)` to
+`SUM(A2:A3)`, dropping a value. Some permutations can produce disjoint reference
+ranges that the current formula language cannot express, so this is a guard,
+not full spreadsheet reference semantics. Remove formulas first only if doing so
+is appropriate for your workbook; keep a copy before restructuring.
+
+Local registered-account desktop and emulated-phone tests checked the guard,
+including a formula still being typed, ordinary cell undo, row insertion, server
+sync and fresh-session reopening. A separate formula-free reorder/sort test
+passed. Tests exercise the grid's operations API; physical drag gestures and all
+formula reference cases are not verified.
