@@ -116,3 +116,12 @@ registered-account desktop and emulated-phone tests cover recalculation,
 cancel, server sync and opening the saved workbook in a fresh browser session.
 Physical touch remains unverified. Results use floating-point arithmetic, so
 some decimals show small rounding differences.
+
+Formula cells display up to 12 significant digits by default, avoiding common
+floating-point display artifacts. **Formula help · display → Show
+full floating-point precision** shows the complete JavaScript numeric result;
+the choice is stored per account in this browser and is not part of a workbook.
+This rounds the display only: calculations and CSV exports use full precision,
+and saved workbooks retain the original formula text. XLSX export follows its
+existing workbook conversion rules. As with any floating-point calculation,
+validate engineering-critical results independently.
