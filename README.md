@@ -164,8 +164,12 @@ corrected the measurement through the grid API, saved and synchronized the
 workbook, and reopened the result in a fresh browser session. Physical touch
 editing is not verified by that test.
 
-As a temporary safeguard, moving and sorting rows or columns is blocked while
-any sheet contains a formula. Deleting rows is permitted only below every
+As a temporary safeguard, sorting and dragging rows or columns is blocked
+while any sheet contains a formula. **Move row up/down** is available when the
+active sheet has at most 128 supported, currently valid formulas, each referring
+only to its own row, and the other sheets contain no formulas. Select a cell in
+the row first. Cross-row references, unsupported syntax, scientific notation,
+formula errors and formulas on another sheet keep those row moves blocked. Deleting rows is permitted only below every
 formula cell and understood reference in the workbook; deleting columns is
 permitted only to their right. Unknown or ambiguous formula syntax keeps
 deletion blocked. Undo/redo is blocked when its next action would change the
@@ -187,3 +191,10 @@ Local registered-account desktop and emulated-phone tests also removed an
 unrelated trailing row and column from a two-sheet workbook, preserved formula
 text and results, blocked deletion through a referenced area, synced and reopened.
 This is a conservative subset, not a general formula-reference rewrite.
+
+Local desktop and emulated-phone account tests used the row controls on rows
+with local arithmetic and ranges using mouse/touch emulation and keyboard Enter,
+then checked adjusted references and results after sync and fresh-session reopen. An automated mouse drag reordered
+a formula-free control but did not reorder the guarded formula workbook. A
+touch-drag attempt also left formulas unchanged, but the same gesture did not
+move the formula-free control, so touch-drag support remains unverified.
