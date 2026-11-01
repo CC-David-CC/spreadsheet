@@ -138,6 +138,13 @@ and saved workbooks retain the original formula text. XLSX export follows its
 existing workbook conversion rules. As with any floating-point calculation,
 validate engineering-critical results independently.
 
+When a formula cell is changed to a literal, its old formula tooltip and
+accessibility label are removed; other formula labels remain available. Local
+registered-account desktop and emulated-phone tests cover the correction,
+CSV import/export, server sync and reopening the workbook in a fresh browser.
+The test inspects accessibility labels but does not verify a physical screen
+reader or touch device.
+
 In aggregate functions, text that has numeric syntax but overflows the browser's
 floating-point range (for example `1e309`) is an error rather than a label to
 ignore. The formula displays `#ERROR!` and CSV export stops, so an overflowing
