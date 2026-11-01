@@ -13,6 +13,11 @@ const mixed=[['10'],[''],['temperature'],['20'],['=AVERAGE(A1:A4)'],['=COUNT(A1:
 assert.equal(calculate(mixed,4,0).value,15);assert.equal(calculate(mixed,5,0).value,2);assert.equal(calculate(mixed,6,0).value,30);assert.equal(calculate(mixed,7,0).value,10);assert.equal(calculate(mixed,8,0).value,20);assert.equal(calculate(mixed,9,0).value,2);
 assert.equal(calculate([['label'],[''],['=AVERAGE(A1:A2)']],2,0).error,'#ERROR!');assert.equal(calculate([['label'],[''],['=MIN(A1:A2)']],2,0).value,0);assert.equal(calculate([['text'],['=A1+1']],1,0).error,'#ERROR!');assert.equal(calculate([['=SUM(A1:A1)']],0,0).error,'#ERROR!');
 console.log('PASS aggregate functions ignore empty cells and text labels');
+for(const value of ['0x10','0b10','0o10','   ']){
+ assert.equal(calculate([[value,'=A1']],0,1).error,'#ERROR!',`direct reference rejects ${JSON.stringify(value)}`);
+ assert.equal(calculate([[value,'=SUM(A1)']],0,1).value,0,`aggregate ignores text ${JSON.stringify(value)}`);
+}
+for(const [value,expected] of [[' -1.25e+2 ',-125],['.5',0.5],['2.',2]])assert.equal(calculate([[value,'=A1']],0,1).value,expected);
 assert.equal(calculate([['=SUM(A99999)']],0,0).error,'#ERROR!');
 
 for(const formula of ['=1/(1/0)','=1e999^0','=(-1)^0.5^0.5','=SUM(1e308,1e308,-1e308)'])assert.equal(calculate([[formula]],0,0).error,'#ERROR!',formula+' propagates intermediate errors');
