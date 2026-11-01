@@ -52,3 +52,7 @@ resolving the issue. The app rechecks the workbook when an export or open
 finishes, including changes detected while the operation was running. Local
 desktop, emulated-phone and 4K and live emulated-phone tests cover a server
 change during CSV export, retained export status, saving a copy and reopening.
+
+Saving or exporting commits the active cell first, so the snapshot includes
+what the user is typing. Desktop and emulated-phone tests cover saving and
+CSV/XLSX export; physical touch remains unverified.
