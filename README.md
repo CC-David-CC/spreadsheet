@@ -84,6 +84,12 @@ Only one Open from My files chooser can be active per window. Repeated clicks
 while it is open do not create competing choices; cancelling leaves the
 current workbook in place.
 
+Only one file or folder chooser can run at a time. If the destination path is
+edited or the saved workbook changes while a folder choice is pending, that
+choice is ignored and the user can choose again. Local desktop and
+emulated-phone tests cover overlapping choices, saving during a choice,
+native and CSV server saves, and reopening. Physical touch is unverified.
+
 Native workbook validation counts the rectangular grid Jspreadsheet will
 create, including its minimum 10 columns by 20 rows, across all sheets. A
 workbook whose expanded grids exceed 10,000 cells is rejected before it can
