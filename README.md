@@ -133,3 +133,14 @@ measurement cannot silently disappear from an average or total. Ordinary
 nonnumeric labels remain ignored. Local registered-account desktop and
 emulated-phone tests covered a failed CSV export retaining the old file,
 correcting the measurement, server sync and fresh-session reopening.
+
+Direct cell references accept decimal and scientific-notation numeric text;
+nonnumeric text, including `0x10` and whitespace-only text, gives `#ERROR!`
+instead of silently using JavaScript's number conversion. Aggregate ranges
+continue to ignore text labels. This can change results for previously saved
+workbooks that relied on hexadecimal-style text being treated as a number.
+An isolated local registered-account desktop and emulated-phone test opened
+a measurement workbook, confirmed an invalid reference blocked CSV export,
+corrected the measurement through the grid API, saved and synchronized the
+workbook, and reopened the result in a fresh browser session. Physical touch
+editing is not verified by that test.

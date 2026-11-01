@@ -3,10 +3,11 @@ export function calculate(data, row, col) {
  const active=new Set(); let steps=0;
  const fail=()=>{throw Error('Invalid formula');};
  const finite=n=>{if(!Number.isFinite(n))fail();return n;};
- const cell=(r,c)=>{if(++steps>20000||r<0||c<0||r>9999||c>9999)fail();const key=r+':'+c;if(active.has(key))fail();const value=data[r]?.[c]??'';if(typeof value==='string'&&value.startsWith('=')){active.add(key);try{return parse(value.slice(1));}finally{active.delete(key);}}if(value===''||value===null)return 0;const n=Number(value);if(!Number.isFinite(n))fail();return n;};
+ const decimal=text=>/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?$/.test(text.trim());
+ const cell=(r,c)=>{if(++steps>20000||r<0||c<0||r>9999||c>9999)fail();const key=r+':'+c;if(active.has(key))fail();const value=data[r]?.[c]??'';if(typeof value==='string'&&value.startsWith('=')){active.add(key);try{return parse(value.slice(1));}finally{active.delete(key);}}if(value===''||value===null)return 0;if(typeof value==='string'&&!decimal(value))fail();const n=Number(value);if(!Number.isFinite(n))fail();return n;};
  // Jspreadsheet stores typed numbers as strings. Aggregate ranges ignore
  // blanks and nonnumeric labels but accept decimal numeric strings.
- const aggregateCell=(r,c)=>{if(++steps>20000||r<0||c<0||r>9999||c>9999)fail();const value=data[r]?.[c];if(value===undefined||value===null||value===''||typeof value==='boolean')return null;if(typeof value==='string'&&!value.startsWith('=')){const text=value.trim();if(!/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?$/.test(text))return null;if(!Number.isFinite(Number(text)))fail();}return cell(r,c);};
+ const aggregateCell=(r,c)=>{if(++steps>20000||r<0||c<0||r>9999||c>9999)fail();const value=data[r]?.[c];if(value===undefined||value===null||value===''||typeof value==='boolean')return null;if(typeof value==='string'&&!value.startsWith('=')){if(!decimal(value))return null;if(!Number.isFinite(Number(value)))fail();}return cell(r,c);};
  const reference=s=>{const m=/^([A-Za-z]{1,3})([1-9][0-9]{0,4})$/.exec(s);if(!m)fail();let c=0;for(const ch of m[1].toUpperCase())c=c*26+ch.charCodeAt(0)-64;return [Number(m[2])-1,c-1];};
  function parse(input){if(input.length>1024)fail();const tokens=input.match(/\s+|(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?|[A-Za-z]+[0-9]*|[()+\-*/^,:]/g)||[];if(tokens.join('')!==input)fail();const t=tokens.filter(x=>!/^\s+$/.test(x));let i=0,depth=0;const peek=()=>t[i],take=x=>peek()===x?(i++,true):false;
  const expression=()=>{if(++depth>64)fail();let v=term();while(peek()==='+'||peek()==='-'){const op=t[i++],n=term();v=finite(op==='+'?v+n:v-n);}depth--;return v;};
