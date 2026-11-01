@@ -59,3 +59,7 @@ CSV/XLSX export; physical touch remains unverified.
 
 If a workbook opened directly from Files cannot be read, the app reports the
 error and opens a new blank workbook. The original file remains unchanged.
+
+Only one Open from My files chooser can be active per window. Repeated clicks
+while it is open do not create competing choices; cancelling leaves the
+current workbook in place.
