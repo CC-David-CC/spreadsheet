@@ -9,6 +9,11 @@ Choose **Open from My files** to open a workbook, and **Choose save folder**
 to select where a native workbook is saved. A file that cannot be opened leaves
 the current workbook and its unsaved edits available. If a cell is still being edited while a file opens, the editor commits that cell before checking for changes and asks before replacing it. Saves capture the current filename and workbook when started, write to the browser first and synchronize with the server. If edits occur during the save, the newer edits remain unsaved. Saving over a different existing workbook asks in a desktop-styled confirmation dialog; the target version is checked again after the answer so a file changed while the dialog was open is preserved. Opening over unsaved edits uses the same themed dialog. Cancel keeps the current workbook and its edits open.
 
+Typing in a cell marks the workbook as unsaved immediately, even before that
+cell is committed. Closing the window therefore asks before discarding the
+active edit. Local desktop and emulated-phone tests cover cancelling close,
+saving, server synchronization and reopening in a fresh browser session.
+
 After importing CSV or XLSX, save the new `.codisheet` before reloading. The
 imported copy has no saved workbook to restore until then; it does not reopen a
 previously loaded workbook as though it were the imported copy.
