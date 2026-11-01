@@ -3,7 +3,7 @@
 Jspreadsheet CE supplies the grid; SheetJS CE converts XLSX inside an
 app-owned worker. Files and account storage are provided by the host. Native
 `.codisheet` files keep sheet names, cell values and formula text. XLSX opens as
-an imported copy; formatting, charts and advanced features are not preserved. **Open from My files** also imports UTF-8 comma-separated CSV as a new workbook, leaving the original CSV unchanged. CSV fields remain text, including leading zeros. Fields beginning with `=` are prefixed with an apostrophe so they do not silently become formulas; remove the apostrophe deliberately if a formula is intended. CSV import is limited to 8 MiB and a 10,000-cell grid (including the minimum grid size); semicolon-separated files are not supported. Files opens CSV in Data Explorer by default; use Spreadsheet’s Open button to import one here.
+an imported copy; formatting, charts and advanced features are not preserved. **Open from My files** also imports UTF-8 comma-separated CSV and tab-separated TSV as a new workbook, leaving the original file unchanged. Imported fields remain text, including leading zeros. Fields beginning with `=` are prefixed with an apostrophe so they do not silently become formulas; remove the apostrophe deliberately if a formula is intended. CSV and TSV import are limited to 8 MiB and a 10,000-cell grid (including the minimum grid size); semicolon-separated files are not supported. Files opens CSV and TSV in Data Explorer by default; use Spreadsheet’s Open button to import one here.
 Export creates a separate XLSX in Files and never downloads to the PC. The destination and workbook values are captured when export starts; later edits are not included, and the status reports that distinction. Existing XLSX files require confirmation and a version check. **Export current sheet CSV** writes the selected worksheet’s calculated values to a separate UTF-8 CSV in My files. CSV does not preserve formulas, formatting or other sheets; unsupported or invalid formulas stop the export. Trailing empty rows and columns are omitted, formula-like text is prefixed with an apostrophe for spreadsheet safety, and output is limited to 8 MiB. Existing CSV files require replacement confirmation.
 
 Under **CSV text safety**, protection is on by default for each window. It
@@ -198,3 +198,10 @@ then checked adjusted references and results after sync and fresh-session reopen
 a formula-free control but did not reorder the guarded formula workbook. A
 touch-drag attempt also left formulas unchanged, but the same gesture did not
 move the formula-free control, so touch-drag support remains unverified.
+
+Local registered-account desktop and emulated-phone tests imported TSV through
+My files, including quoted tabs and multiline text, preserved leading zeros and
+escaped leading equals, calculated a formula, saved a separate workbook, exported
+CSV, and synced and reopened. An invalid TSV left the saved workbook open. The
+original TSV stayed unchanged. Physical touch and other TSV dialects remain
+unverified.

@@ -4,7 +4,7 @@ import {sheetToCSVWithReport} from '../csv-export.mjs';
 const MAX_CELLS=10000,MAX_SHEETS=32;
 self.onmessage=event=>{const {id,operation,bytes,sheets,data,protect}=event.data;try{
  if(operation==='export-csv'){self.postMessage({id,result:sheetToCSVWithReport(data,{protect:protect!==false})});
- }else if(operation==='import-csv'){self.postMessage({id,result:parseCSV(bytes)});
+ }else if(operation==='import-csv'||operation==='import-tsv'){self.postMessage({id,result:parseCSV(bytes,{delimiter:operation==='import-tsv'?'\t':','})});
  }else if(operation==='import'){
   const workbook=XLSX.read(bytes,{type:'array',cellFormula:true,cellStyles:false,cellDates:false});if(workbook.SheetNames.length>MAX_SHEETS)throw Error('Workbook has too many sheets.');let cells=0;
   const result=workbook.SheetNames.map(name=>{const ws=workbook.Sheets[name],range=ws['!ref']?XLSX.utils.decode_range(ws['!ref']):{s:{r:0,c:0},e:{r:0,c:0}};if(range.e.r>9999||range.e.c>255||(cells+=(range.e.r+1)*(range.e.c+1))>MAX_CELLS)throw Error('Workbook exceeds the 10,000-cell limit.');const data=[];for(let r=0;r<=range.e.r;r++){const row=[];for(let c=0;c<=range.e.c;c++){const cell=ws[XLSX.utils.encode_cell({r,c})];const value=cell?.f?'='+cell.f:cell?.v??'';row.push(!cell?.f&&typeof value==='string'&&value.startsWith('=')?"'"+value:value);}data.push(row);}return {name,data};});self.postMessage({id,result});
