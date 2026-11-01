@@ -77,8 +77,16 @@ Saving or exporting commits the active cell first, so the snapshot includes
 what the user is typing. Desktop and emulated-phone tests cover saving and
 CSV/XLSX export; physical touch remains unverified.
 
-If a workbook opened directly from Files cannot be read, the app reports the
-error and opens a new blank workbook. The original file remains unchanged.
+If a workbook opened directly from Files is temporarily unavailable, the app
+keeps its restore reference and offers **Retry saved spreadsheet**. A blank
+scratch workbook is available in the meantime; if the original is named
+`Untitled.codisheet`, the scratch default uses `Untitled-recovery.codisheet`.
+Retry asks before discarding scratch edits, and saving a scratch copy switches
+to that file and clears the old retry target. Invalid or confirmed missing
+files open a blank workbook without a retry. Local registered-account desktop
+and emulated-phone tests covered injected read failure, retry cancellation,
+separate scratch save and sync, unchanged server original and successful retry.
+Physical touch and a conflict during CSV/XLSX import remain unverified.
 
 Only one Open from My files chooser can be active per window. Repeated clicks
 while it is open do not create competing choices; cancelling leaves the
