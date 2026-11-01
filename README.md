@@ -106,3 +106,13 @@ open workbook exceed the limit, saving reports an error. Local desktop and
 emulated-phone account tests cover sparse, wide and multi-sheet limits,
 preserving and syncing the prior workbook, fresh-session reopening and the
 exact boundary. Very large input parsing and physical touch remain unverified.
+
+Choose **Try measurement example** to start with three measured lengths and an
+`AVERAGE` formula. Change a length to see the average update, then save the
+workbook to My files if you want to keep it. Replacing unsaved work asks first;
+cancelling keeps the current workbook. The example is a separate unsaved
+workbook and never writes over a saved workbook without confirmation. Local
+registered-account desktop and emulated-phone tests cover recalculation,
+cancel, server sync and opening the saved workbook in a fresh browser session.
+Physical touch remains unverified. Results use floating-point arithmetic, so
+some decimals show small rounding differences.
