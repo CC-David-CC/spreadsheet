@@ -9,6 +9,14 @@ Choose **Open from My files** to open a workbook, and **Choose save folder**
 to select where a native workbook is saved. A file that cannot be opened leaves
 the current workbook and its unsaved edits available. Saves capture the current filename and workbook when started, write to the browser first and synchronize with the server. If edits occur during the save, the newer edits remain unsaved. Saving over a different existing workbook asks in a desktop-styled confirmation dialog; the target version is checked again after the answer so a file changed while the dialog was open is preserved. Opening over unsaved edits uses the same themed dialog. Cancel keeps the current workbook and its edits open.
 
+After importing CSV or XLSX, save the new `.codisheet` before reloading. The
+imported copy has no saved workbook to restore until then; it does not reopen a
+previously loaded workbook as though it were the imported copy.
+XLSX import requires a ZIP-based workbook; empty files, plain text with an
+`.xlsx` name, and the tested truncated ZIP input are rejected
+without replacing the current workbook. Other malformed or unusual workbooks
+have not been comprehensively tested.
+
 Run `npm ci --prefix apps/system/spreadsheet --ignore-scripts` before building.
 SheetJS is pinned from its official distribution, not the outdated npm registry.
 
