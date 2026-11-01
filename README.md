@@ -14,6 +14,11 @@ cell is committed. Closing the window therefore asks before discarding the
 active edit. Local desktop and emulated-phone tests cover cancelling close,
 saving, server synchronization and reopening in a fresh browser session.
 
+Moving rows or columns, sorting, undo and redo mark a workbook unsaved. Local
+desktop and emulated-phone account tests exercise these grid operations and
+cover the close warning, saving a row reorder, server sync and reopening.
+These tests use the grid's operation API; physical drag gestures remain untested.
+
 After importing CSV or XLSX, save the new `.codisheet` before reloading. The
 imported copy has no saved workbook to restore until then; it does not reopen a
 previously loaded workbook as though it were the imported copy.
