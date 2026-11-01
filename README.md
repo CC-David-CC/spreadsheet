@@ -22,6 +22,11 @@ XLSX import requires a ZIP-based workbook; empty files, plain text with an
 without replacing the current workbook. Other malformed or unusual workbooks
 have not been comprehensively tested.
 
+XLSX text cells beginning with `=` gain a visible leading apostrophe on import,
+matching CSV's text safety rule. Actual XLSX formula cells remain formulas.
+The apostrophe is part of the stored cell text; remove it deliberately to turn
+that text into a formula. A single `=` is retained when exporting XLSX.
+
 Run `npm ci --prefix apps/system/spreadsheet --ignore-scripts` before building.
 SheetJS is pinned from its official distribution, not the outdated npm registry.
 
