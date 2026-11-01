@@ -10,3 +10,8 @@ assert.throws(()=>parseCSV(Uint8Array.from([0xff])),/encoded data|encoding/i);co
 import {sheetToCSV} from '../apps/system/spreadsheet/csv-export.mjs';
 assert.equal(sheetToCSV([['Name','Value','Twice'],['a,"b"','-5','=B2*2'],['unsafe','@cmd',''],['','','']]),'"Name","Value","Twice"\r\n"a,""b""","-5","-10"\r\n"unsafe","\'@cmd",""\r\n');
 assert.equal(sheetToCSV([['']]),'');assert.throws(()=>sheetToCSV([['=UNSUPPORTED(1)']]),/unsupported or invalid formula/);assert.ok(sheetToCSV([['  =1+1']]).startsWith('"\'  =1+1"'));console.log('PASS CSV value export, formula validation, quoting, trimming and text protection');
+import {sheetToCSVWithReport} from '../apps/system/spreadsheet/csv-export.mjs';
+const cells=[['@sensor','-part','-5','=2+3']];
+assert.deepEqual(sheetToCSVWithReport(cells),{csv:'"\'@sensor","\'-part","-5","5"\r\n',protectedCells:2,unprotectedCells:0});
+assert.deepEqual(sheetToCSVWithReport(cells,{protect:false}),{csv:'"@sensor","-part","-5","5"\r\n',protectedCells:0,unprotectedCells:2});
+assert.deepEqual(sheetToCSVWithReport([['']]),{csv:'',protectedCells:0,unprotectedCells:0});
