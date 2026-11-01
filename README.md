@@ -34,7 +34,7 @@ Local desktop and emulated-phone and live emulated-phone account tests also cove
 
 If the local workbook conflicts with the server while saving, the status directs you to resolve the copies in Files. Further edits remain marked unsaved; a local conflicting copy is not described as syncing.
 
-The local candidate asks before closing during a workbook save or CSV/XLSX
+The app asks before closing during a workbook save or CSV/XLSX
 export, even when the workbook was clean when the operation began. Cancelling
 or failing an operation restores the earlier unsaved state unless newer edits
 were made. A file write already sent to storage may still finish after close.
