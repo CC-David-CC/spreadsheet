@@ -257,3 +257,14 @@ sync and fresh-session reopen. A desktop test also opened the exported CSV in
 Text. Physical touch, actual operating-system clipboard integration, all grid
 shortcuts and a 128 MiB workbook are not covered; the 8 MiB CSV/TSV limit
 remains in force.
+
+## Browser commands
+
+The signed-in desktop's in-page command registry exposes `inspect`,
+`read-cell`, and `set-cell` for this window. Sheet, row and column indexes are
+zero-based. `read-cell` returns the raw cell text or formula, bounded to 4,096
+UTF-16 code units; it does not claim the calculated display is the raw value.
+`set-cell` requires the current inspected revision, uses the same edit and dirty
+tracking as the grid, and refuses to overwrite a protected long cell or an
+active cell edit. Use the normal Save control to save the workbook. These
+commands do not provide a remote agent connection.
