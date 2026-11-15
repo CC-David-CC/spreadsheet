@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
-import {calculate} from '../apps/system/spreadsheet/formulas.mjs';
-import {sheetToCSV} from '../apps/system/spreadsheet/csv-export.mjs';
+import {calculate} from "../../formulas.mjs";
+import {sheetToCSV} from "../../csv-export.mjs";
 for (const fn of ['SUM','AVERAGE','MIN','MAX','COUNT']) {
   for (const value of ['1e309','-1e309','  1e309  ']) {
     const data=[[value],['1'],[`=${fn}(A1:A2)`]];

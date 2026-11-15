@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {calculate} from '../apps/system/spreadsheet/formulas.mjs';
+import {calculate} from "../../formulas.mjs";
 assert.equal(calculate([['5'],['7'],['=SUM(A1:A2)']],2,0).value,12);
 assert.equal(calculate([['4','=A1*2+1']],0,1).value,9);
 assert.equal(calculate([['=AVERAGE(2,4,6)']],0,0).value,4);

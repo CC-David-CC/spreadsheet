@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
-import {calculate} from '../apps/system/spreadsheet/formulas.mjs';
-import {sheetToCSV} from '../apps/system/spreadsheet/csv-export.mjs';
+import {calculate} from "../../formulas.mjs";
+import {sheetToCSV} from "../../csv-export.mjs";
 for(const expression of ['=TAN(PI()/2)','=TAN(-PI()/2)','=TAN(3*PI()/2)','=TAN(-3*PI()/2)']){
  assert.equal(calculate([[expression]],0,0).error,'#ERROR!',expression);
  assert.throws(()=>sheetToCSV([[expression]]),/unsupported or invalid formula/);

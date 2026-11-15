@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
-import {parseCSV} from '../apps/system/spreadsheet/workers/csv.mjs';
-import {sheetToCSVWithReport} from '../apps/system/spreadsheet/csv-export.mjs';
+import {parseCSV} from "../../workers/csv.mjs";
+import {sheetToCSVWithReport} from "../../csv-export.mjs";
 const encode=new TextEncoder();
 for(const delimiter of [',','\t']){
  const value='A😀"'.repeat(20000),bytes=encode.encode('"'+value.replaceAll('"','""')+'"'+delimiter+'end\r\n');

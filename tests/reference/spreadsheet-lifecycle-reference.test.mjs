@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';
-import {createSpreadsheetLifecycle} from '../apps/system/spreadsheet/lifecycle.mjs';
+import {createSpreadsheetLifecycle} from "../../lifecycle.mjs";
 const fixture=()=>{const s={dirty:false,pending:false,quiesced:false};let pauses=0,resumes=0;const l=createSpreadsheetLifecycle({readState:()=>({...s}),pause:()=>{pauses++;s.quiesced=true},resume:()=>{resumes++;s.quiesced=false}});return {s,l,get pauses(){return pauses},get resumes(){return resumes}}};
 test('edits invalidate an approval even when already dirty',()=>{const {s,l}=fixture();let events=0;const off=l.subscribe(()=>events++);s.dirty=true;l.changed();const approved=l.snapshot();l.changed();assert.notEqual(l.snapshot().revision,approved.revision);assert.equal(events,2);off();off();l.changed();assert.equal(events,2)});
 test('quiesce is reversible, idempotent, and leaves revision stable',async()=>{const x=fixture(),before=x.l.snapshot();const lease=await x.l.quiesce();assert.equal(x.s.quiesced,true);assert.equal(x.l.snapshot().revision,before.revision);await assert.rejects(x.l.quiesce(),/already paused/);lease.release();lease.release();assert.equal(x.s.quiesced,false);assert.equal(x.pauses,1);assert.equal(x.resumes,1)});
