@@ -1,0 +1,3 @@
+# Historical app guidance
+
+The original app-specific lifecycle/file-operation note is retained under docs/legacy-guidance/ with unchanged source and selected history. It concerns this independently owned app, but its proposed host/view/storage semantics and historical status are not current acceptance. Current WebOS AGENTS and user decisions govern. Review current code/public interfaces before implementation; do not resurrect hidden dual mount contracts, old global hosts, simulated account saves or app-private cross-repository imports. This commit changes documentation only. Shared cross-app/workspace guidance remains parent-owned under migration/legacy-workspace-guidance/.
