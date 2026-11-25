@@ -1,1 +1,13 @@
-{"workers":{"convert":"workers/convert.mjs"}}
+{
+  "workers": {
+    "convert": "workers/convert.mjs"
+  },
+  "patches": [
+    {
+      "path": "node_modules/jspreadsheet-ce/dist/index.js",
+      "sha256": "d51368406bc33aa7525d348fb74742eb1436d0286654cc615f21f4ce96fa470d",
+      "find": "e.corner.setAttribute(\"onselectstart\",\"return false\")",
+      "replace": "e.corner.addEventListener(\"selectstart\",event=>event.preventDefault())"
+    }
+  ]
+}
