@@ -18,7 +18,12 @@ desktop and emulated-phone tests cover CSV import, calculation, both export
 options, server bytes and fresh-session workbook reopening. Physical touch and
 how every third-party spreadsheet interprets CSV remain unverified.
 Choose **Open from My files** to open a workbook, and **Choose save folder**
-to select where a native workbook is saved. A file that cannot be opened leaves
+to select where a native workbook is saved. Enter a filename to save in the
+current folder, or enter a path such as `Documents/Measurements`. Save adds
+`.codisheet` to a name with no extension. The CSV and XLSX export buttons can
+use the workbook name or an explicit name with that export's extension. On
+phones, open **Workbook tools** for the example, row movement, formula help,
+and CSV settings. A file that cannot be opened leaves
 the current workbook and its unsaved edits available. If a cell is still being edited while a file opens, the editor commits that cell before checking for changes and asks before replacing it. Saves capture the current filename and workbook when started, write to the browser first and synchronize with the server. If edits occur during the save, the newer edits remain unsaved. Saving over a different existing workbook asks in a desktop-styled confirmation dialog; the target version is checked again after the answer so a file changed while the dialog was open is preserved. Opening over unsaved edits uses the same themed dialog. Cancel keeps the current workbook and its edits open.
 
 Typing in a cell marks the workbook as unsaved immediately, even before that
@@ -44,7 +49,7 @@ matching CSV's text safety rule. Actual XLSX formula cells remain formulas.
 The apostrophe is part of the stored cell text; remove it deliberately to turn
 that text into a formula. A single `=` is retained when exporting XLSX.
 
-Run `npm ci --prefix apps/system/spreadsheet --ignore-scripts` before building.
+Run `npm ci --prefix apps/spreadsheet --ignore-scripts` before building.
 SheetJS is pinned from its official distribution, not the outdated npm registry.
 
 Basic arithmetic, cell references, PI(), ABS, SQRT, SIN, COS, TAN, SUM, AVERAGE, MIN, MAX and COUNT are calculated with an app-local bounded parser. Trigonometric functions take radians; for degrees use, for example, `=SIN(30*PI()/180)`. Calculations use floating-point numbers and may have rounding error. Invalid domains such as `=SQRT(-1)` report `#ERROR!`. The collapsed Formula help panel lists supported functions and examples. In SUM, AVERAGE, MIN, MAX and COUNT, referenced blank cells and nonnumeric text labels are ignored; decimal numeric text is counted as numeric because the grid stores many entries as text. AVERAGE with no numeric values reports an error; MIN and MAX return zero. This correction may change results produced by older versions for ranges containing blank cells. Other formulas remain in the file
