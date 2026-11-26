@@ -1,4 +1,122 @@
-.spreadsheet-content{display:flex;flex-direction:column;overflow:hidden;background:#fff}.spreadsheet-bar{display:flex;gap:6px;flex-wrap:wrap;padding:6px}.spreadsheet-bar input{flex:1;min-width:150px;padding:6px}.spreadsheet-bar button{min-height:44px;padding:5px 10px}.spreadsheet-grid{flex:1;min-height:0;overflow:auto}.spreadsheet-content .app-status{padding:6px}
-.spreadsheet-file-warning:not([hidden]){margin:4px 6px;padding:6px 8px;border-left:4px solid #a65300;background:#fff1d6;color:#4d2900;line-height:1.35}
-.spreadsheet-structure-warning:not([hidden]){margin:4px 6px;padding:6px 8px;border-left:4px solid #a65300;background:#fff1d6;color:#4d2900;line-height:1.35}
-.spreadsheet-long-notice:not([hidden]){margin:4px 6px;padding:6px 8px;border-left:4px solid #a65300;background:#fff1d6;color:#4d2900;line-height:1.35}
+.spreadsheet-content {
+  --sheet-surface: var(--desktop-surface, #fff);
+  --sheet-raised: var(--desktop-raised, #f3f5f7);
+  --sheet-text: var(--desktop-text, #16202c);
+  --sheet-muted: var(--desktop-muted, #465465);
+  --sheet-border: var(--desktop-border, #b8c2cd);
+  --sheet-selection: color-mix(in srgb, #6daaff 22%, var(--sheet-surface));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--sheet-surface);
+  color: var(--sheet-text);
+}
+
+.spreadsheet-bar, .spreadsheet-tool-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 6px;
+}
+
+.spreadsheet-bar {
+  background: var(--sheet-raised);
+  border-bottom: 1px solid var(--sheet-border);
+}
+
+.spreadsheet-bar input {
+  flex: 1 1 180px;
+  min-width: 0;
+  padding: 6px;
+}
+
+.spreadsheet-bar button, .spreadsheet-tool-actions button {
+  min-height: 44px;
+  padding: 5px 9px;
+  color: var(--sheet-text);
+  background: var(--sheet-surface);
+  border: 1px solid var(--sheet-border);
+  border-radius: 6px;
+}
+
+.spreadsheet-tools {
+  border-bottom: 1px solid var(--sheet-border);
+  padding: 3px 8px;
+}
+
+.spreadsheet-tools summary, .spreadsheet-structure-warning summary {
+  cursor: pointer;
+  padding: 6px 0;
+}
+
+.spreadsheet-structure-warning p { margin: 0; }
+
+.spreadsheet-grid {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  --jss-border-color: var(--sheet-border);
+}
+
+.spreadsheet-grid .jss_worksheet, .spreadsheet-grid .jss_worksheet .editor > input,
+.spreadsheet-grid .jss_worksheet .editor > textarea {
+  color: var(--sheet-text);
+  background-color: var(--sheet-surface);
+}
+
+.spreadsheet-grid .jtabs-headers > div:not(.jtabs-border),
+.spreadsheet-grid .jss_worksheet > thead > tr > td,
+.spreadsheet-grid .jss_worksheet > tbody > tr > td:first-child,
+.spreadsheet-grid .jss_worksheet > tfoot > tr > td {
+  color: var(--sheet-text);
+  background-color: var(--sheet-raised);
+}
+
+.spreadsheet-grid .jss_worksheet,
+.spreadsheet-grid .jss_worksheet > thead > tr > td,
+.spreadsheet-grid .jss_worksheet > tbody > tr > td,
+.spreadsheet-grid .jss_worksheet > tfoot > tr > td {
+  border-top-color: var(--sheet-border);
+  border-left-color: var(--sheet-border);
+}
+
+.spreadsheet-grid .jss_worksheet > tbody > tr > td.readonly {
+  color: var(--sheet-muted);
+}
+
+.spreadsheet-grid .jss_worksheet .highlight,
+.spreadsheet-grid .jss_worksheet .selection,
+.spreadsheet-grid .jss_worksheet > thead > tr > td.selected,
+.spreadsheet-grid .jss_worksheet > tbody > tr.selected > td:first-child,
+.spreadsheet-grid .jtabs-headers > div.jtabs-selected {
+  background-color: var(--sheet-selection);
+}
+
+.spreadsheet-content .app-status {
+  margin: 0;
+  padding: 6px;
+  color: var(--sheet-text);
+  background: var(--sheet-raised);
+  border-color: var(--sheet-border);
+}
+
+.spreadsheet-file-warning:not([hidden]),
+.spreadsheet-structure-warning:not([hidden]),
+.spreadsheet-long-notice:not([hidden]) {
+  margin: 4px 6px;
+  padding: 4px 8px;
+  border-left: 4px solid #a65300;
+  background: #fff1d6;
+  color: #4d2900;
+  line-height: 1.35;
+}
+
+@media (max-width: 720px) {
+  .spreadsheet-bar input {
+    flex-basis: 100%;
+    min-height: 36px;
+    box-sizing: border-box;
+  }
+
+  .spreadsheet-bar button { font-size: 12px; }
+}
